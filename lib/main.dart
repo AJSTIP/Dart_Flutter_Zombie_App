@@ -1,4 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sms/flutter_sms.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,95 +35,72 @@ class MyApp extends StatelessWidget {
 class HomePage extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
-    return MyCheckBox();
+    return Options();
   }
-
 }
 
-class MyCheckBox extends State<HomePage> {
-
-  bool smsIsChecked = false;
-  bool emailIsChecked = false;
-  bool twitterIsChecked = false;
-  bool facebookIsChecked = false;
-
+class Options extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.indigo,
-      appBar: AppBar(
-        title: const Text('                     Communications Page', style: TextStyle(fontSize: 18),),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(30),
-        child:  Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children:[
-            const Text(
-              'How would you like to communicate?',
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.black,
+        backgroundColor: Colors.white30,
+        appBar: AppBar(
+          title: const Text('                     Communications Page',
+            style: TextStyle(fontSize: 18),),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(30),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'How would you like to communicate?',
+                style: TextStyle(
+                  decoration: TextDecoration.underline,
+                  decorationStyle: TextDecorationStyle.double,
+                  fontSize: 18,
+                  color: Colors.black,
+                ),
               ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(top: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Checkbox(
-                      value: smsIsChecked,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          smsIsChecked = value!;
-                        });
-                      }
-                  ),
-                  const Text(
-                    'SMS',
-                    style: TextStyle(fontSize: 10),
-                  ),
-                  Checkbox(
-                      value: emailIsChecked,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          emailIsChecked = value!;
-                        });
-                      }
-                  ),
-                  const Text (
-                    'Email',
-                    style: TextStyle(fontSize: 10),
-                  ),
-                  Checkbox(
-                      value: twitterIsChecked,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          twitterIsChecked = value!;
-                        });
-                      }
-                  ),
-                  const Text (
-                    'Twitter',
-                    style: TextStyle(fontSize: 10),
-                  ),
-                  Checkbox(
-                      value: facebookIsChecked,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          facebookIsChecked = value!;
-                        });
-                      }
-                  ),
-                  const Text (
-                    'Facebook',
-                    style: TextStyle(fontSize: 10),
+              Container(
+                  margin: const EdgeInsets.only(top: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        child: const Text(
+                          'SMS', style: TextStyle(fontSize: 35),),
+                        onPressed: () {
+                          if (kDebugMode) {
+                            launch('https://flutter.dev/');
+                            launch('sms:+3304694769?body=Test Message');
+                          }
+                        },
+                      ),
+                    ],
                   )
-                ],
               ),
-            ),
-          ],
+              Container(
+                margin: const EdgeInsets.only(top: 10, left: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      child: const Text(
+                        'Email', style: TextStyle(fontSize: 35),),
+                      onPressed: () {
+                        if (kDebugMode) {
+                          launch('https://flutter.dev/');
+                          launch('mailto:tarr_colin@student.mahoningctc.com?subject=Test');
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         )
-      )
-  );
-}}
+    );
+  }
+}
